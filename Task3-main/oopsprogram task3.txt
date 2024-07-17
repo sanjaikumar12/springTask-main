@@ -1,0 +1,256 @@
+// Book class
+public class Book {
+    private int bookID;
+    private String title;
+    private String author;
+    private boolean isAvailable;
+
+    // Constructor to initialize book attributes
+    public Book(int bookID, String title, String author) {
+        this.bookID = bookID;
+        this.title = title;
+        this.author = author;
+        this.isAvailable = true;
+    }
+
+    // Getter and setter methods for book attributes
+    public int getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(int bookID) {
+        this.bookID = bookID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+}
+
+// Library class
+public class Library {
+    private Book[] books;
+    private int bookCount;
+
+    // Constructor to initialize library
+    public Library() {
+        this.books = new Book[5];
+        this.bookCount = 0;
+    }
+
+    // Method to add a book to the library
+    public void addBook(Book book) {
+        if (bookCount < books.length) {
+            books[bookCount] = book;
+            bookCount++;
+        } else {
+            System.out.println("Library is full. Cannot add more books.");
+        }
+    }
+
+    // Method to remove a book from the library
+    public void removeBook(int bookID) {
+        for (int i = 0; i < bookCount; i++) {
+            if (books[i].getBookID() == bookID) {
+                books[i] = null;
+                bookCount--;
+                System.out.println("Book removed successfully.");
+                return;
+            }
+        }
+        System.out.println("Book not found.");
+    }
+
+    // Method to search for a book by ID
+    public Book searchBook(int bookID) {
+        for (int i = 0; i < bookCount; i++) {
+            if (books[i].getBookID() == bookID) {
+                return books[i];
+            }
+        }
+        return null;
+    }
+
+    // Method to display all books in the library
+    public void displayBooks() {
+        for (int i = 0; i < bookCount; i++) {
+            System.out.println("Book ID: " + books[i].getBookID());
+            System.out.println("Title: " + books[i].getTitle());
+            System.out.println("Author: " + books[i].getAuthor());
+            System.out.println("Availability: " + (books[i].isAvailable() ? "Available" : "Not Available"));
+            System.out.println();
+        }
+    }
+}
+
+// ManagementSystem class
+public class ManagementSystem {
+    public static void main(String[] args) {
+        Library library = new Library();
+
+        while (true) {
+            System.out.println("Library Management System");
+            System.out.println("1. Add a book");
+            System.out.println("2. Remove a book");
+            System.out.println("3. Search for a book");
+            System.out.println("4. Display all books");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = Integer.parseInt(System.console().readLine());
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter book ID: ");
+                    int bookID = Integer.parseInt(System.console().readLine());
+                    System.out.print("Enter title: ");
+                    String title = System.console().readLine();
+                    System.out.print("Enter author: ");
+                    String author = System.console().readLine();
+                    Book book = new Book(bookID, title, author);
+                    library.addBook(book);
+                    break;
+                case 2:
+                    System.out.print("Enter book ID to remove: ");
+                    int removeBookID = Integer.parseInt(System.console().readLine());
+                    library.removeBook(removeBookID);
+                    break;
+                case 3:
+                    System.out.print("Enter book ID to search: ");
+                    int searchBookID = Integer.parseInt(System.console().readLine());
+                    Book searchedBook = library.searchBook(searchBookID);
+                    if (searchedBook != null) {
+                        System.out.println("Book found:");
+                        System.out.println("Title: " + searchedBook.getTitle());
+                        System.out.println("Author: " + searchedBook.getAuthor());
+                        System.out.println("Availability: " + (searchedBook.isAvailable() ? "Available" : "Not Available"));
+                    } else {
+                        System.out.println("Book not found.");
+                    }
+                    break;
+                case 4:
+                    library.displayBooks()
+}
+}
+}
+}
+
+=============================================================================================
+Question 2
+
+// Interface Taxable
+public interface Taxable {
+    double SALES_TAX = 0.07;
+    double INCOME_TAX = 0.105;
+
+    abstract double calculateTax();
+}
+
+// Class Employee
+public class Employee implements Taxable {
+    private int empId;
+    private String name;
+    private double salary;
+
+    public Employee(int empId, String name, double salary) {
+        this.empId = empId;
+        this.name = name;
+        this.salary = salary;
+    }
+
+    @Override
+    public double calculateTax() {
+        return salary * INCOME_TAX;
+    }
+
+    public int getEmpId() {
+        return empId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+}
+
+// Class Product
+public class Product implements Taxable {
+    private int pid;
+    private double price;
+    private int quantity;
+
+    public Product(int pid, double price, int quantity) {
+        this.pid = pid;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    @Override
+    public double calculateTax() {
+        return price * SALES_TAX;
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+}
+
+// Class DriverMain
+public class DriverMain {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter employee ID: ");
+        int empId = scanner.nextInt();
+        System.out.print("Enter employee name: ");
+        String name = scanner.next();
+        System.out.print("Enter employee salary: ");
+        double salary = scanner.nextDouble();
+
+        Employee employee = new Employee(empId, name, salary);
+        double incomeTax = employee.calculateTax();
+        System.out.println("Income tax: " + incomeTax);
+
+        System.out.print("Enter product ID: ");
+        int pid = scanner.nextInt();
+        System.out.print("Enter product price: ");
+        double price = scanner.nextDouble();
+        System.out.print("Enter product quantity: ");
+        int quantity = scanner.nextInt();
+
+        Product product = new Product(pid, price, quantity);
+        double salesTax = product.calculateTax();
+        System.out.println("Sales tax: " + salesTax);
+    }
+}
